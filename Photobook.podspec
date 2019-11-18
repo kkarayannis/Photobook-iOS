@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "Photobook"
-  s.version      = "2.1.0"
+  s.version      = "2.1.2"
   s.summary      = "The Photobook SDK makes it easy to create beautiful, high quality photo books from within your app"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.platform     = :ios, "10.0"
@@ -12,10 +12,10 @@ Pod::Spec.new do |s|
   s.swift_version = "5.0"
   s.resource_bundles  = { 'PhotobookResources' => ['Photobook/Base.lproj/Photobook.storyboard', 'Photobook/Resources/Assets.xcassets', 'Photobook/Resources/Lora-Regular.ttf', 'Photobook/Resources/Montserrat-Bold.ttf', 'Photobook/Resources/OpenSans-Regular.ttf'] }
   s.module_name         = 'Photobook'
-  s.dependency "KeychainSwift", "~> 16.0.1"
-  s.dependency "SDWebImage", "~> 4.4.0"
-  s.dependency "Stripe", "~> 15.0.1"
-  s.dependency "Analytics", "~> 3.6.10"
+  s.dependency "KeychainSwift", "~> 17.0.0"
+  s.dependency "SDWebImage", "~> 5.2.0"
+  s.dependency "Stripe", "~> 18.0.0"
+  s.dependency "Analytics", "~> 3.7.0"
   s.dependency "PayPal-iOS-Dynamic-Loader"
 
 end

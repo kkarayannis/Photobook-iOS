@@ -508,7 +508,7 @@ class PhotobookViewController: UIViewController, PhotobookNavigationBarDelegate,
     }
     
     private func dropView() {
-        guard var sourceIndexPath = interactingItemIndexPath, let draggingView = draggingView else { return }
+        guard let sourceIndexPath = interactingItemIndexPath, let draggingView = draggingView else { return }
         
         let sourceCell = (collectionView.cellForItem(at: sourceIndexPath) as? PhotobookCollectionViewCell)
         
@@ -803,6 +803,7 @@ extension PhotobookViewController: UICollectionViewDataSource {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotobookCoverCollectionViewCell.reuseIdentifier, for: indexPath) as! PhotobookCoverCollectionViewCell
+            cell.product = product
             cell.width = (view.bounds.size.width - Constants.cellSideMargin * 2.0) / 2.0
             cell.delegate = self
             cell.isPageInteractionEnabled = !isRearranging
@@ -815,6 +816,7 @@ extension PhotobookViewController: UICollectionViewDataSource {
             }
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotobookCollectionViewCell.reuseIdentifier, for: indexPath) as! PhotobookCollectionViewCell
+            cell.product = product
             cell.isVisible = indexPath != interactingItemIndexPath && indexPath != insertingIndexPath
             cell.width = view.bounds.size.width - Constants.cellSideMargin * 2.0
             cell.clipsToBounds = false
@@ -978,17 +980,17 @@ extension PhotobookViewController: PhotobookCollectionViewCellDelegate {
         editPage(page, at: index, frame: frame, containerView: containerView)
     }
 
-    func didLongPress(_ sender: UILongPressGestureRecognizer, on cell: PhotobookCollectionViewCell) {
-        
-        // Disallow dragging first and last pages
-        guard let indexPath = collectionView.indexPath(for: cell),
-              indexPath.row > 0 && indexPath.row < collectionView.numberOfItems(inSection: 1) - 1
-            else { return }
-        
+    func didLongPress(_ sender: UILongPressGestureRecognizer, on cell: PhotobookCollectionViewCell) {                
         if sender.state == .began {
             guard let photobookFrameView = sender.view as? PhotobookFrameView else {
                 fatalError("Long press failed to recognise the target view")
             }
+            
+            // Disallow dragging first and last pages
+            guard let indexPath = collectionView.indexPath(for: cell),
+                  indexPath.row > 0 && indexPath.row < collectionView.numberOfItems(inSection: 1) - 1
+                else { return }
+            
             closeCurrentCell() {
                 cell.shouldRevealActions = false
                 self.liftView(photobookFrameView)
